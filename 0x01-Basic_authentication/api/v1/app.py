@@ -38,9 +38,9 @@ def bef_req():
     ]
     if auth.require_auth(request.path, excluded):
         if auth.authorization_header(request) is None:
-            abort(401, description="Unauthorized")
+            abort(401)  # Trigger 401 error
         if auth.current_user(request) is None:
-            abort(403, description="Forbidden")
+            abort(403)  # Trigger 403 error
 
 
 @app.errorhandler(404)
@@ -78,4 +78,5 @@ if __name__ == "__main__":
     # Get host and port from environment variables or use defaults
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
-    app.run(host=host, port=port)  # Run the Flask application
+    app.run(host=host, port=port)
+    # Run the Flask application
